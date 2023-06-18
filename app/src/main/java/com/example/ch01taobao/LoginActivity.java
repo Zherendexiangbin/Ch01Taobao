@@ -10,8 +10,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ch01taobao.entity.Commodity;
+import com.example.ch01taobao.server.API;
+import com.example.ch01taobao.server.HttpRequester;
+import com.example.ch01taobao.service.user.LoginService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,64 +51,16 @@ public class LoginActivity extends AppCompatActivity {
 
         //给按钮登录添加点击事件
         btnLog.setOnClickListener(view -> {
-            StringBuffer info = new StringBuffer();
             //获取账户名和密码;
-            String username = edtName.getText().toString();
-            info.append(username + ";");
-            String password = edtPwd.getText().toString();
-            info.append(password + ";");
+            String username = edtName.getText().toString().trim();
+            String password = edtPwd.getText().toString().trim();
 
             if(username.length() == 0 || password.length() == 0){
-                System.out.println("账户名或密码不能为空");
+                Toast.makeText(this, "账户名或密码不能为空", Toast.LENGTH_SHORT);
             }else if(password.length() > 0 && password.length() < 6){
-                System.out.println("密码不能小于6位");
+                Toast.makeText(this, "密码不能小于6位", Toast.LENGTH_SHORT);
             }else{
-//                    new LoginTask().execute(username,password);
-//                    Handler handler = new Handler(Looper.getMainLooper());
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            URL url = new URL("http://10.7.85.64:8080/TaoBao/register");
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                            conn.setRequestMethod("POST");
-                            conn.setRequestProperty("UTF-8","text/html;charset=UTF-8");
-                            String requestBody = "username=" + username+"&password="+password+"&action="+"login";
-                            conn.setDoInput(true);
-                            conn.setDoOutput(true);
-                            OutputStream os = conn.getOutputStream();
-                            os.write(requestBody.getBytes("UTF-8"));
-                            os.flush();
-                            os.close();
-
-                            //返回响应的结果：
-                            int responseCode = conn.getResponseCode();
-                            //读取响应内容：
-                            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                            String inputLine;
-                            StringBuilder response = new StringBuilder();
-                            while((inputLine = in.readLine())!=null){
-                                response.append(inputLine);
-                            }
-                            in.close();
-
-                            if(response.toString() != null && response.toString().equals("Invalid username or password")){
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(LoginActivity.this,"登陆失败",Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }else{
-                                comeinCommodityList(response.toString());
-                            }
-                        } catch (MalformedURLException e) {
-                            throw new RuntimeException(e);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }).start();
+                LoginService.login(username, password, this);
             }
         });
         btnRegister.setOnClickListener(new View.OnClickListener() {
