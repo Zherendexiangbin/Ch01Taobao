@@ -13,39 +13,36 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.ch01taobao.CommodityDetailActivity;
-import com.example.ch01taobao.MainActivity;
+import com.example.ch01taobao.LoginActivity;
 import com.example.ch01taobao.R;
 import com.example.ch01taobao.adapter.CommodityAdapter;
 import com.example.ch01taobao.entity.Commodity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecommendFragment extends Fragment {
-    private List<Commodity> commoditys;
+    private List<Commodity> commodities;
     private GridView gridCommodity;
     private CommodityAdapter commodityAdapter;
 
-    public RecommendFragment(){
-
+    public RecommendFragment() {
     }
-
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initDate();
+
         View recommend = inflater.inflate(R.layout.recommend_page,null);
         gridCommodity = recommend.findViewById(R.id.grid_commodity);
-        commodityAdapter = new CommodityAdapter(getContext(), R.layout.recommend_context_page,commoditys);
+        commodityAdapter = new CommodityAdapter(getContext(), R.layout.recommend_context_page, commodities);
         gridCommodity.setAdapter(commodityAdapter);
         gridCommodity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
                 intent.setClass(parent.getContext(), CommodityDetailActivity.class);
-                intent.putExtra("position",commoditys.get(position));
+                intent.putExtra("position",commodities.get(position));
                 startActivity(intent);
             }
         });
@@ -53,12 +50,12 @@ public class RecommendFragment extends Fragment {
     }
 
     private void initDate() {
-        commoditys = MainActivity.getCommodityList();
+        commodities = LoginActivity.getCommodityList();
     }
 //    {
-//        commoditys = new ArrayList<>();
+//        commodities = new ArrayList<>();
 //
-//        commoditys.add(
+//        commodities.add(
 //                new Commodity(
 //                        R.mipmap.kafei,
 //                        "咖啡",
@@ -67,7 +64,7 @@ public class RecommendFragment extends Fragment {
 //                )
 //        );
 //
-//        commoditys.add(
+//        commodities.add(
 //                new Commodity(
 //                        R.mipmap.hbcar,
 //                        "滑板车",
@@ -75,7 +72,7 @@ public class RecommendFragment extends Fragment {
 //                        "￥500"
 //                )
 //        );
-//        commoditys.add(
+//        commodities.add(
 //                new Commodity(
 //                        R.mipmap.cat,
 //                        "梅里猫",
@@ -84,7 +81,7 @@ public class RecommendFragment extends Fragment {
 //                )
 //        );
 //
-//        commoditys.add(
+//        commodities.add(
 //                new Commodity(
 //                        R.mipmap.gjia,
 //                        "恐龙骨架",
@@ -93,7 +90,7 @@ public class RecommendFragment extends Fragment {
 //                )
 //        );
 //
-//        commoditys.add(
+//        commodities.add(
 //                new Commodity(
 //                        R.mipmap.xx,
 //                        "蜡笔小新",
@@ -102,7 +99,7 @@ public class RecommendFragment extends Fragment {
 //                )
 //        );
 //
-//        commoditys.add(
+//        commodities.add(
 //                new Commodity(
 //                        R.mipmap.taojiao,
 //                        "桃胶",
@@ -111,7 +108,7 @@ public class RecommendFragment extends Fragment {
 //                )
 //        );
 //
-//        commoditys.add(
+//        commodities.add(
 //                new Commodity(
 //                        R.mipmap.mian,
 //                        "白象荞麦面",
@@ -120,7 +117,7 @@ public class RecommendFragment extends Fragment {
 //                )
 //        );
 //
-//        commoditys.add(
+//        commodities.add(
 //                new Commodity(
 //                        R.mipmap.putaojiu,
 //                        "中国红葡萄酒",
@@ -129,7 +126,7 @@ public class RecommendFragment extends Fragment {
 //                )
 //        );
 //
-//        commoditys.add(
+//        commodities.add(
 //                new Commodity(
 //                        R.mipmap.yaya,
 //                        "鸭鸭玩具",

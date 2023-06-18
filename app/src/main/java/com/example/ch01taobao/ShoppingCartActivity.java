@@ -65,7 +65,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         .setMessage("总价: " + mTotalPrice.getText().toString())
                         .setPositiveButton("是", (dialog, which) -> {
                             intent.removeExtra("productData");
-                            intent.setClass(ShoppingCartActivity.this, MainActivity.class);
+                            intent.setClass(ShoppingCartActivity.this, LoginActivity.class);
                             startActivity(intent);
                             Toast.makeText(ShoppingCartActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                             Cart.newCart();

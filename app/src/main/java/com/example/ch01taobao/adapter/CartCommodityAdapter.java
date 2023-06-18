@@ -21,6 +21,9 @@ import com.example.ch01taobao.entity.CartCommodity;
 
 import java.util.List;
 
+/**
+ * 购物车适配器
+ */
 public class CartCommodityAdapter extends RecyclerView.Adapter<CartCommodityAdapter.ViewHolder> {
     private List<CartCommodity> itemList;
     private TextView sumPrice;
