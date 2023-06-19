@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import com.example.ch01taobao.adapter.PageAdapter;
+import com.example.ch01taobao.entity.Commodity;
 import com.example.ch01taobao.fragment.MineFragment;
 import com.example.ch01taobao.fragment.OrderFragment;
 import com.example.ch01taobao.fragment.RecommendFragment;
@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommodityListActivity extends AppCompatActivity {
-
-    private Context mContext;
     private TabLayout tbl;
     private ViewPager2 vp2;
     private List<Fragment> fragments;
@@ -59,6 +57,7 @@ public class CommodityListActivity extends AppCompatActivity {
         );
         mediator.attach();
     }
+
     private void initPages() {
         fragments = new ArrayList<>();
         fragments.add(new RecommendFragment());

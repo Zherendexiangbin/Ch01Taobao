@@ -19,12 +19,6 @@ import java.util.List;
 
 public class LoginService {
 
-    private static List<Commodity> commodityList = null;
-
-    public static List<Commodity> getCommodityList() {
-        return commodityList;
-    }
-
     public static void login(String username, String password, Activity activity) {
         Gson gson = new Gson();
         JsonObject requestBody = new JsonObject();
@@ -34,31 +28,18 @@ public class LoginService {
         HttpRequester login = new HttpRequester(requestBody.toString(), API.LOGIN, activity);
         String responseBody = login.doPost();
 
-        if(gson.fromJson(responseBody,JsonObject.class).get("state").getAsString().equals("success")){
-            commodityList = CommodityService.getCommodity(responseBody);
-            Intent intent = new Intent(activity, CommodityListActivity.class);
-            activity.startActivity(intent);
-            Toast.makeText(activity, "登录成功", Toast.LENGTH_SHORT);
-            activity.finish();
-        }else{
-            Toast.makeText(activity, "账号或密码错误", Toast.LENGTH_SHORT);
+        switch (gson.fromJson(responseBody, JsonObject.class).get("state").getAsString()) {
+            case "success":
+                Intent intent = new Intent(activity, CommodityListActivity.class);
+                activity.startActivity(intent);
+                Toast.makeText(activity, "登录成功", Toast.LENGTH_SHORT);
+                activity.finish();
+                break;
+            case "fail":
+                Toast.makeText(activity, "账号或密码错误", Toast.LENGTH_SHORT);
+                break;
+            default:
+                Toast.makeText(activity, "系统内部错误", Toast.LENGTH_SHORT);
         }
-
-
-
-//        switch (gson.fromJson(responseBody, JsonObject.class).get("state").getAsString()) {
-//            case "success":
-//                Intent intent = new Intent(activity, CommodityListActivity.class);
-//                activity.startActivity(intent);
-//                CommodityService.getCommodity();
-//                Toast.makeText(activity, "登录成功", Toast.LENGTH_SHORT);
-//                activity.finish();
-//                break;
-//            case "fail":
-//                Toast.makeText(activity, "账号或密码错误", Toast.LENGTH_SHORT);
-//                break;
-//            default:
-//                Toast.makeText(activity, "系统内部错误", Toast.LENGTH_SHORT);
-//        }
     }
 }

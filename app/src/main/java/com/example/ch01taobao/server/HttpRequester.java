@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class HttpRequester {
-    public static final String SERVER_URL = "http://10.7.88.243:8080/TaoBao/";
+    public static final String SERVER_URL = "http://10.7.88.243:8080/TaoBao";
 
     private String requestBody;
     private String api;
@@ -40,6 +40,62 @@ public class HttpRequester {
      * @return 服务器返回的响应体，类型为String
      */
     public String doPost() {
+        FutureTask<String> futureTask = new FutureTask<>(() -> {
+            URL url = new URL(SERVER_URL + api);
+
+            Log.i("ServerUrl", url.toString());
+            Log.i("RequestBody", requestBody);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-type", "application/json");
+            conn.setConnectTimeout(5000);
+            conn.setReadTimeout(5000);
+
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
+            writer.write(requestBody);
+            writer.newLine();   // \r\n
+            writer.flush();
+            writer.close();
+
+//            Log.i("TAG", conn.getHeaderField("Set-Cookie"));
+            //返回响应的结果：
+            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                String line;
+                StringBuilder response = new StringBuilder();
+                //读取响应内容：
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
+                reader.close();
+                Log.i("ResponseBody", response.toString());
+                return response.toString();
+            }
+
+            return null;
+        });
+        new Thread(futureTask).start(); // will return a String
+
+        try {
+            return futureTask.get(3, TimeUnit.SECONDS);    // return responseBody
+        } catch (ExecutionException e) {
+            Toast.makeText(context, "程序内部错误", Toast.LENGTH_SHORT);
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            Toast.makeText(context, "程序内部错误", Toast.LENGTH_SHORT);
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            Toast.makeText(context, "服务器异常", Toast.LENGTH_SHORT);
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String doGet() {
         FutureTask<String> futureTask = new FutureTask<>(new Callable<String>() {
             @Override
             public String call() throws Exception {
@@ -47,25 +103,16 @@ public class HttpRequester {
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setDoInput(true);
-                conn.setDoOutput(true);
-                conn.setRequestMethod("POST");
+                conn.setRequestMethod("GET");
                 conn.setRequestProperty("Content-type", "application/json");
                 conn.setUseCaches(false);
                 conn.setConnectTimeout(5000);
                 conn.setReadTimeout(5000);
 
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
-                writer.write(requestBody);
-                writer.newLine();   // \r\n
-                writer.flush();
-                writer.close();
-
-                String responseBody = null;
-
                 Log.i("TAG", conn.getHeaderField("Set-Cookie"));
                 //返回响应的结果：
                 if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
                     String line;
                     StringBuilder response = new StringBuilder();
                     //读取响应内容：
@@ -73,10 +120,12 @@ public class HttpRequester {
                         response.append(line);
                     }
                     reader.close();
-                    responseBody = response.toString();
+
+                    Log.i("ResponseBody", response.toString());
+                    return response.toString();
                 }
 
-                return responseBody;
+                return null;
             }
         });
         new Thread(futureTask).start(); // will return a String
@@ -90,7 +139,6 @@ public class HttpRequester {
         } catch (TimeoutException e) {
             Toast.makeText(context, "服务器异常", Toast.LENGTH_SHORT);
         }
-
         return null;
     }
 }

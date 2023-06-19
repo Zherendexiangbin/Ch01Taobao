@@ -5,7 +5,6 @@ import android.widget.Toast;
 
 import com.example.ch01taobao.server.API;
 import com.example.ch01taobao.server.HttpRequester;
-import com.example.ch01taobao.service.commodity.CommodityService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -17,7 +16,7 @@ public class RegisterService {
         requestBody.addProperty("username",username);
         requestBody.addProperty("password",password);
 
-        HttpRequester register = new HttpRequester(requestBody.toString(), API.Register,activity);
+        HttpRequester register = new HttpRequester(requestBody.toString(), API.REGISTER,activity);
         String responseBody = register.doPost();
 
         if(gson.fromJson(responseBody,JsonObject.class).get("state").getAsString()=="success"){
