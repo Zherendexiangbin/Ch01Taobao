@@ -53,7 +53,13 @@ public class RegisterActivity extends AppCompatActivity {
                 }else if(!reconfirm.equals(password)){
                     System.out.println("两次输入密码不符！请重新输入");
                 } else{
-                    new RegisterActivity.RegisterTask().execute(username,password);
+//                    new RegisterActivity.RegisterTask().execute(username,password);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    });
                 }
             }
         });

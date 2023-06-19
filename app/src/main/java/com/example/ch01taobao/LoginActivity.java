@@ -91,7 +91,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    public static List<Commodity> getCommodityList(){
+        return commodityList;
+    }
 
 //    private class LoginTask extends AsyncTask<String,Void,String>{
 //        @Override
@@ -161,9 +163,5 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        }
 //    }
-    public static List<Commodity> getCommodityList(){
-        return commodityList;
-    }
-
 
 }
