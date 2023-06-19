@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class HttpRequester {
-    public static final String SERVER_URL = "http://10.7.85.64:8080/TaoBao/";
+    public static final String SERVER_URL = "http://10.7.88.243:8080/TaoBao/";
 
     private String requestBody;
     private String api;
@@ -46,10 +46,13 @@ public class HttpRequester {
                 URL url = new URL(SERVER_URL + api);
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-type", "application/json");
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-type", "application/json");
+                conn.setUseCaches(false);
+                conn.setConnectTimeout(5000);
+                conn.setReadTimeout(5000);
 
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
                 writer.write(requestBody);

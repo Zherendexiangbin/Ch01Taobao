@@ -21,7 +21,7 @@ public class CommodityDetailActivity extends AppCompatActivity {
     private TextView productAbout;
     private Button pdbtn;
     private Intent intent;
-    private String imgUrl = "http://10.7.85.64:8080/TaoBao/images/products";
+    private String imgUrl = "http://10.7.88.243:8080/TaoBao/images/products";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -29,7 +29,7 @@ public class CartCommodityAdapter extends RecyclerView.Adapter<CartCommodityAdap
     private TextView sumPrice;
     private TextView emptyCartText;
 
-    private String imgUrl = "http://10.7.85.64:8080/TaoBao/images/products";
+    private String imgUrl = "http://10.7.88.243:8080/TaoBao/images/products";
 
     public CartCommodityAdapter(List<CartCommodity> itemList, TextView sumPrice, TextView emptyCartText) {
         this.itemList = itemList;

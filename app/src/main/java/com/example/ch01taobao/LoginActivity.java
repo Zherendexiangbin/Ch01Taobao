@@ -63,27 +63,26 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void comeinCommodityList(String result) {
-        Gson gson = new Gson();
-        JsonArray json = gson.fromJson(result, JsonArray.class);
-
-
-        json.getAsJsonArray().asList().forEach(commodity->{
-            commodityList.add(gson.fromJson(commodity,Commodity.class));
-        });
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this,CommodityListActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-    public static List<Commodity> getCommodityList(){
-        return commodityList;
-    }
+//    private void comeinCommodityList(String result) {
+//        Gson gson = new Gson();
+//        JsonArray json = gson.fromJson(result, JsonArray.class);
+//
+//        json.getAsJsonArray().asList().forEach(commodity->{
+//            commodityList.add(gson.fromJson(commodity,Commodity.class));
+//        });
+//
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(LoginActivity.this,CommodityListActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//    }
+//    public static List<Commodity> getCommodityList(){
+//        return commodityList;
+//    }
 
 //    private class LoginTask extends AsyncTask<String,Void,String>{
 //        @Override

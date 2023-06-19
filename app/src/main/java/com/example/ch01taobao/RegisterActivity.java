@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ch01taobao.entity.Commodity;
+import com.example.ch01taobao.service.user.RegisterService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -54,69 +55,64 @@ public class RegisterActivity extends AppCompatActivity {
                     System.out.println("两次输入密码不符！请重新输入");
                 } else{
 //                    new RegisterActivity.RegisterTask().execute(username,password);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                        }
-                    });
+                    RegisterService.register(username, password, RegisterActivity.this);
                 }
             }
         });
 
     }
-    public class RegisterTask extends AsyncTask<String,Void,String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String url = "http://10.7.85.64:8080/TaoBao/register";
-            try {
-                URL obj = new URL(url);
-                HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
-                //设置请求方法：
-                conn.setRequestMethod("POST");
-                //设置请求头信息："Content-Type", "application/x-www-form-urlencoded";"text/html;charset=UTF-8"
-                conn.setRequestProperty("Content-Type", "text/html;charset=UTF-8");
-
-                //设置请求体：用于传递用户名和密码
-                String requestBody = "username=" + URLEncoder.encode(params[0],"UTF-8") + "&password="+URLEncoder.encode(params[1],"UTF-8")+"&action="+"register";
-
-                conn.setDoOutput(true);
-                conn.setDoInput(true);
-                OutputStream os = conn.getOutputStream();
-                os.write(requestBody.getBytes("UTF-8"));
-                os.flush();
-                os.close();
-
-                //获取响应状态码：
-                int responseCode = conn.getResponseCode();
-
-                //读取响应的内容：
-                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-                while((inputLine = in.readLine())!= null){
-                    response.append(inputLine);
-                }
-                in.close();
-
-                //返回响应结果：
-                return response.toString();
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        protected void onPostExecute(String result){
-            //处理响应结果
-            if (result != null && result.equals("Invalid username or password")){
-                Toast.makeText(RegisterActivity.this,"注册失败",Toast.LENGTH_SHORT).show();
-
-            }else{
-                Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+//    public class RegisterTask extends AsyncTask<String,Void,String> {
+//        @Override
+//        protected String doInBackground(String... params) {
+//            String url = "http://10.7.88.243:8080/TaoBao/register";
+//            try {
+//                URL obj = new URL(url);
+//                HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+//                //设置请求方法：
+//                conn.setRequestMethod("POST");
+//                //设置请求头信息："Content-Type", "application/x-www-form-urlencoded";"text/html;charset=UTF-8"
+//                conn.setRequestProperty("Content-Type", "text/html;charset=UTF-8");
+//
+//                //设置请求体：用于传递用户名和密码
+//                String requestBody = "username=" + URLEncoder.encode(params[0],"UTF-8") + "&password="+URLEncoder.encode(params[1],"UTF-8")+"&action="+"register";
+//
+//                conn.setDoOutput(true);
+//                conn.setDoInput(true);
+//                OutputStream os = conn.getOutputStream();
+//                os.write(requestBody.getBytes("UTF-8"));
+//                os.flush();
+//                os.close();
+//
+//                //获取响应状态码：
+//                int responseCode = conn.getResponseCode();
+//
+//                //读取响应的内容：
+//                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//                String inputLine;
+//                StringBuilder response = new StringBuilder();
+//                while((inputLine = in.readLine())!= null){
+//                    response.append(inputLine);
+//                }
+//                in.close();
+//
+//                //返回响应结果：
+//                return response.toString();
+//            } catch (MalformedURLException e) {
+//                throw new RuntimeException(e);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        protected void onPostExecute(String result){
+//            //处理响应结果
+//            if (result != null && result.equals("Invalid username or password")){
+//                Toast.makeText(RegisterActivity.this,"注册失败",Toast.LENGTH_SHORT).show();
+//
+//            }else{
+//                Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
 
     private void initnate() {
         edtName = findViewById(R.id.edt_name);

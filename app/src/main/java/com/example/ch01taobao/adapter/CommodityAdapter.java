@@ -25,7 +25,7 @@ public class CommodityAdapter extends BaseAdapter {
     private Context context;
     private int layoutId;
     private List<Commodity> commodities;
-    private String imgUrl = "http://10.7.85.64:8080/TaoBao/images/products";
+    private String imgUrl = "http://10.7.88.243:8080/TaoBao/images/products";
 
     public CommodityAdapter(Context context, int layoutId, List<Commodity> commodities) {
         this.context = context;

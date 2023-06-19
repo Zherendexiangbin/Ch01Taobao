@@ -17,6 +17,7 @@ import com.example.ch01taobao.LoginActivity;
 import com.example.ch01taobao.R;
 import com.example.ch01taobao.adapter.CommodityAdapter;
 import com.example.ch01taobao.entity.Commodity;
+import com.example.ch01taobao.service.user.LoginService;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class RecommendFragment extends Fragment {
     }
 
     private void initDate() {
-        commodities = LoginActivity.getCommodityList();
+        commodities = LoginService.getCommodityList();
     }
 //    {
 //        commodities = new ArrayList<>();
