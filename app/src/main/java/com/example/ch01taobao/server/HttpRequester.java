@@ -1,6 +1,7 @@
 package com.example.ch01taobao.server;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -57,6 +58,8 @@ public class HttpRequester {
                 writer.close();
 
                 String responseBody = null;
+
+                Log.i("TAG", conn.getHeaderField("Set-Cookie"));
                 //返回响应的结果：
                 if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
