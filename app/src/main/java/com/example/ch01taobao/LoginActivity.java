@@ -10,20 +10,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ch01taobao.entity.Commodity;
-import com.example.ch01taobao.server.API;
-import com.example.ch01taobao.server.HttpRequester;
 import com.example.ch01taobao.service.user.LoginService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
